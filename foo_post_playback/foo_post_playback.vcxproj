@@ -109,6 +109,10 @@
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>$(SolutionDir)sdk\foobar2000\shared\shared-Win32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>cd $(solutionDir)
+powershell -ExecutionPolicy Unrestricted -file .\package.ps1 "$(TargetDir)" $(ProjectName)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -152,6 +156,10 @@
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>$(SolutionDir)sdk\foobar2000\shared\shared-x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>cd $(solutionDir)
+powershell -ExecutionPolicy Unrestricted -file .\package.ps1 "$(TargetDir)" $(ProjectName)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Configuration.cpp" />
