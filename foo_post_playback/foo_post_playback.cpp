@@ -3,6 +3,6 @@
 
 DECLARE_COMPONENT_VERSION(
     "POST Playback",
-    "0.1",
+    "0.2",
     ""
 );

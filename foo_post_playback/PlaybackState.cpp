@@ -2,7 +2,8 @@
 #include "PlaybackState.h"
 #include "Configuration.h"
 
-#include <future>
+#include <thread>
+#include <chrono>
 
 PlaybackState::PlaybackState(void)
 {
@@ -44,6 +45,11 @@ void PlaybackState::on_playback_stop(play_control::t_stop_reason p_reason)
     currentTrackTitle = "";
     currentTrackArtist = "";
     currentTrackAlbum = "";
+    if (p_reason == playback_control::stop_reason_eof) {
+        std::thread t(&PlaybackState::wait_for_new_track, this);
+        t.detach();
+        return;
+    }
     std::thread t(&PlaybackState::post_playback_state, this, "0");
     t.detach();
 }
@@ -120,6 +126,13 @@ void PlaybackState::post_playback_state(const char* state)
         catch (std::exception e) { //http error handle
             console::error(e.what());
         }
+    }
+}
+
+void PlaybackState::wait_for_new_track() {
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    if (currentTrackTitle = "") {
+        post_playback_state("0");
     }
 }
 

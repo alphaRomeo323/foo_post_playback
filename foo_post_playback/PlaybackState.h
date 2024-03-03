@@ -28,6 +28,7 @@ class PlaybackState :
 	/// </summary>
 	/// <param name="state">"1": playing, "2": paused, "0": stopped</param>
 	void post_playback_state(const char* state);
+	void wait_for_new_track();
 public:
 	PlaybackState(void);
 	~PlaybackState(void);
